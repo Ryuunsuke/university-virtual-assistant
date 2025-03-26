@@ -133,19 +133,19 @@ section .signin .content .form .inputBox i
   font-size: 0.8em;
   color: #fff;
 }
-.signin .content .form .links 
+.signin .content .form .inputlinks 
 {
   position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.signin .content .form .links a 
+.signin .content .form .inputlinks a 
 {
   color: #fff;
   text-decoration: none;
 }
-.signin .content .form .links a:nth-child(2)
+.signin .content .form .inputlinks a:nth-child(2)
 {
   color: #0f0;
   font-weight: 600;

@@ -1,14 +1,16 @@
 import sqlite3
 
+dtb = "database/university_assistant.db"
+
 def create_database():
-    conn = sqlite3.connect('university_assistant.db')
+    conn = sqlite3.connect(dtb)
     cursor = conn.cursor()
 
     cursor.execute('''CREATE TABLE IF NOT EXISTS users (
                         id_user INTEGER PRIMARY KEY,
                         name TEXT NOT NULL,
-                        email TEXT NOT NULL,
                         password TEXT NOT NULL,
+                        email TEXT NOT NULL,
                         admin INTEGER NOT NULL
                     )''')
 
@@ -39,11 +41,30 @@ def create_database():
     conn.commit()
     conn.close()
 
+create_database()
 
-def main():
-    create_database()
-    print("Database and tables created successfully.")
+def check_user(name):
+    conn = sqlite3.connect(dtb)
+    cursor = conn.cursor()
+    cursor.execute('SELECT name FROM users WHERE name = ?', (name,))
+    result = cursor.fetchone()
+    conn.commit()
+    conn.close()
+    return result[0] if result else None
 
+def check_pass(name):
+    conn = sqlite3.connect(dtb)
+    cursor = conn.cursor()
+    cursor.execute('SELECT password FROM users WHERE name = ?', (name,))
+    result = cursor.fetchone()
+    conn.commit()
+    conn.close()
+    return result[0] if result else None
 
-if __name__ == "__main__":
-    main()
+def register(name, password, email, admin):
+    conn = sqlite3.connect(dtb)
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO users (name, password, email, admin) VALUES (?, ?, ?, ?)',
+                   (name, password, email, admin))  # Corrected order
+    conn.commit()
+    conn.close()
